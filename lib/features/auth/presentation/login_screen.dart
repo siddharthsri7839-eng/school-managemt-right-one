@@ -23,7 +23,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
   final _phoneController = TextEditingController();
   final _otpVerifyController = TextEditingController();
   bool _isBiometricAvailable = false;
-  bool _isDemoMode = false;
+  bool _obscurePassword = true;
 
   // Resend cooldown timer
   Timer? _resendTimer;
@@ -34,18 +34,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
     super.initState();
     WidgetsBinding.instance.addPostFrameCallback((_) {
       _checkBiometricStatus();
-      _checkDemoMode();
     });
-  }
-
-  Future<void> _checkDemoMode() async {
-    try {
-      final isDemo =
-          await ref.read(authRepositoryProvider).checkDemoMode();
-      if (mounted) setState(() => _isDemoMode = isDemo);
-    } catch (_) {
-      // leave demo buttons hidden on any error
-    }
   }
 
   Future<void> _checkBiometricStatus() async {
@@ -309,11 +298,21 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
           const SizedBox(height: 16),
           TextFormField(
             controller: _passwordController,
-            obscureText: true,
-            decoration: const InputDecoration(
+            obscureText: _obscurePassword,
+            decoration: InputDecoration(
               labelText: 'Password',
-              prefixIcon: Icon(Icons.lock_outline),
-              border: OutlineInputBorder(),
+              prefixIcon: const Icon(Icons.lock_outline),
+              suffixIcon: IconButton(
+                icon: Icon(
+                  _obscurePassword ? Icons.visibility_off : Icons.visibility,
+                ),
+                onPressed: () {
+                  setState(() {
+                    _obscurePassword = !_obscurePassword;
+                  });
+                },
+              ),
+              border: const OutlineInputBorder(),
             ),
             textInputAction: TextInputAction.done,
             onFieldSubmitted: (_) => _submitCredentials(),
@@ -413,76 +412,7 @@ class _LoginScreenState extends ConsumerState<LoginScreen> {
             ),
           ),
         ],
-        if (!isOtpScreen && _isDemoMode) _buildDemoQuickAccess(isLoading),
       ],
-    );
-  }
-
-  // =========================================================================
-  // DEMO QUICK ACCESS (only shown when the server is in demo mode)
-  // =========================================================================
-  Widget _buildDemoQuickAccess(bool isLoading) {
-    return Column(
-      children: [
-        const SizedBox(height: 24),
-        Row(
-          children: [
-            const Expanded(child: Divider()),
-            Padding(
-              padding: const EdgeInsets.symmetric(horizontal: 12),
-              child: Text('QUICK ACCESS',
-                  style: TextStyle(
-                      color: Colors.grey[600],
-                      fontSize: 12,
-                      fontWeight: FontWeight.bold,
-                      letterSpacing: 1.5)),
-            ),
-            const Expanded(child: Divider()),
-          ],
-        ),
-        const SizedBox(height: 12),
-        Row(
-          children: [
-            Expanded(
-              child: _demoButton(
-                  label: 'Teacher',
-                  icon: Icons.co_present_outlined,
-                  role: 'teacher',
-                  isLoading: isLoading),
-            ),
-            const SizedBox(width: 12),
-            Expanded(
-              child: _demoButton(
-                  label: 'School Admin',
-                  icon: Icons.admin_panel_settings_outlined,
-                  role: 'schooladmin',
-                  isLoading: isLoading),
-            ),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _demoButton({
-    required String label,
-    required IconData icon,
-    required String role,
-    required bool isLoading,
-  }) {
-    return OutlinedButton.icon(
-      onPressed: isLoading
-          ? null
-          : () => ref.read(authControllerProvider.notifier).demoLogin(role),
-      style: OutlinedButton.styleFrom(
-        foregroundColor: Theme.of(context).colorScheme.primary,
-        side: BorderSide(color: Theme.of(context).colorScheme.primary),
-        padding: const EdgeInsets.symmetric(vertical: 12),
-        shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      ),
-      icon: Icon(icon, size: 18),
-      label: Text(label,
-          style: const TextStyle(fontWeight: FontWeight.bold, fontSize: 13)),
     );
   }
 

@@ -48,6 +48,10 @@ dependencies:
   path_provider: ^2.1.5
   share_plus: ^12.0.2
   flutter_pdfview: ^1.4.4
+  # SQLite Local Database
+  sqflite: ^2.3.3+1
+  sqflite_common_ffi: ^2.3.3
+  path: ^1.9.0
 
   # Push notifications (server-config Firebase init — no google-services.json)
   firebase_core: ^4.6.0

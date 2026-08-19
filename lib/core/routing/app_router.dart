@@ -1,9 +1,6 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:go_router/go_router.dart';
-import 'package:school_erp_staff_app/core/auth/app_permission.dart';
-import 'package:school_erp_staff_app/core/auth/app_role.dart';
 import 'package:school_erp_staff_app/core/auth/permission_service.dart';
 import 'package:school_erp_staff_app/features/auth/presentation/auth_controller.dart';
 import 'package:school_erp_staff_app/shared/widgets/scaffold_with_navbar.dart';
@@ -17,6 +14,7 @@ import '../../features/student_management/presentation/student_search_screen.dar
 import '../../features/student_management/presentation/students_without_photo_screen.dart';
 import '../../features/academics/presentation/academics_dashboard_screen.dart';
 import '../../features/system/presentation/audit_trail_screen.dart';
+import '../../features/system/presentation/demo_database_screen.dart';
 import '../../features/gate_pass/presentation/gate_scanner_screen.dart';
 import '../../features/qr_attendance/presentation/qr_scanner_screen.dart';
 import '../../features/exams/presentation/offline_exams_dashboard_screen.dart';
@@ -374,6 +372,10 @@ final appRouterProvider = Provider<GoRouter>((ref) {
                   GoRoute(
                     path: 'audit-trail',
                     builder: (context, state) => const AuditTrailScreen(),
+                  ),
+                  GoRoute(
+                    path: 'demo-db',
+                    builder: (context, state) => const DemoDatabaseScreen(),
                   ),
                   GoRoute(
                     path: 'offline-exams',

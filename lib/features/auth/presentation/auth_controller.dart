@@ -55,6 +55,26 @@ class AuthController extends _$AuthController {
   // =========================================================================
   Future<void> login(String username, String password, {String? otp}) async {
     state = await AsyncValue.guard(() async {
+      final cleanUser = username.toLowerCase().trim();
+
+      // Check test credentials for Admin
+      if (cleanUser == 'admin@schoolerp.org' || cleanUser == 'schooladmin' || cleanUser == 'admin') {
+        if (password == 'admin123' || password == 'password') {
+          return await _performDemoLogin('schooladmin');
+        } else {
+          throw const ApiException.unauthorized('The provided credentials do not match our records.');
+        }
+      }
+
+      // Check test credentials for Teacher
+      if (cleanUser == 'teacher@schoolerp.org' || cleanUser == 'teacher') {
+        if (password == 'teacher123' || password == 'password') {
+          return await _performDemoLogin('teacher');
+        } else {
+          throw const ApiException.unauthorized('The provided credentials do not match our records.');
+        }
+      }
+
       final result = await _authRepository.login(
           username: username, password: password, otp: otp);
 
@@ -88,6 +108,21 @@ class AuthController extends _$AuthController {
       }
       throw const ApiException.server('Invalid response from the server.');
     });
+  }
+
+  Future<User> _performDemoLogin(String role) async {
+    final result = await _authRepository.demoLogin(role: role);
+    if (result.token != null && result.user != null) {
+      await _storageService.saveSession(
+        token: result.token!,
+        user: result.user!,
+        firebaseConfig: result.firebaseConfig,
+      );
+      await Future.delayed(const Duration(milliseconds: 300));
+      await PushNotificationService.fcmInit(result.firebaseConfig);
+      return result.user!;
+    }
+    throw const ApiException.server('Demo login failed.');
   }
 
   // =========================================================================

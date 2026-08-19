@@ -266,6 +266,15 @@ class AppDrawer extends ConsumerWidget {
             ],
 
             const Divider(),
+            ListTile(
+              leading: const Icon(Icons.storage_outlined, color: Colors.indigo),
+              title: const Text('SQLite Demo DB'),
+              onTap: () {
+                context.pop();
+                context.go('/dashboard/demo-db');
+              },
+            ),
+            const Divider(),
             const DrawerSecuritySection(),
             const Divider(),
           ListTile(
