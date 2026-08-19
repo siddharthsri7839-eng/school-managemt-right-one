@@ -1,0 +1,72 @@
+name: school_erp_staff_app
+description: "A new Flutter project."
+publish_to: 'none'
+version: 3.6.0+6
+
+environment:
+  sdk: '>=3.0.0 <4.0.0'
+
+dependencies:
+  flutter:
+    sdk: flutter
+
+  cupertino_icons: ^1.0.8
+  
+  # ✅ FIX: Aligned all Riverpod packages to compatible versions
+  flutter_riverpod: ^2.5.1
+  riverpod_annotation: ^2.3.5
+
+  dio: ^5.9.0
+  flutter_secure_storage: ^9.2.4
+  go_router: ^16.2.1
+  intl: ^0.20.2 # Updated to match flutter_localizations SDK pin
+  timezone: ^0.10.1 # Render punch times in the school timezone, not the device zone (0.10 required by flutter_local_notifications)
+  uuid: ^4.5.1 # Stable per-device id for buddy-punch / device-binding defence
+  safe_device: ^1.1.9 # On-device developer-mode/root/mock checks (no Play Services needed)
+  file_picker: ^10.3.3
+  url_launcher: ^6.2.6
+  package_info_plus: ^8.3.0 # app version for the update-available check
+  flutter_widget_from_html: ^0.15.1
+  table_calendar: ^3.0.9
+  local_auth: ^2.3.0
+  
+  # Location & Background Service
+  permission_handler: ^11.3.0
+  geolocator: ^11.0.0
+  geolocator_android: ^4.6.0
+  
+  fl_chart: ^1.2.0
+  image_picker: ^1.2.1
+  flutter_map: ^8.3.0
+  latlong2: ^0.9.1
+  flutter_quill: ^11.5.0
+  vsc_quill_delta_to_html: ^1.0.5
+  qr_flutter: ^4.1.0
+  barcode_widget: ^2.0.4
+  mobile_scanner: ^5.2.3 # QR/barcode camera reader for the attendance scanner ("Plan B")
+  syncfusion_flutter_pdfviewer: ^33.2.12
+  path_provider: ^2.1.5
+  share_plus: ^12.0.2
+  flutter_pdfview: ^1.4.4
+
+  # Push notifications (server-config Firebase init — no google-services.json)
+  firebase_core: ^4.6.0
+  firebase_messaging: ^16.1.3
+  flutter_local_notifications: ^20.1.0
+  
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+  flutter_lints: ^4.0.0 # Updated to a more recent compatible version
+
+  build_runner: ^2.4.11
+  
+  # ✅ FIX: Aligned the generator to a compatible version
+  riverpod_generator: ^2.4.0
+
+flutter:
+  uses-material-design: true
+
+  assets:
+    - assets/images/  
