@@ -59,3 +59,30 @@ The local SQLite database (`school_erp_demo.db`) seeded for local testing includ
 * **Demo Configuration Endpoint**: `/demo/config`
 * **Demo Login Endpoint**: `/demo/login`
 * **Standard Login Endpoint**: `/login`
+The image you shared is the Web Admin Portal (Super Admin Web Dashboard) of the School ERP system.
+
+Here is the exact difference between what is in your screenshot and what is in this project folder:
+
+1. The Screenshot = Web Admin Portal 🌐
+Target Users: School Owners, Principals, Super Admins, Accountants, and HR Managers.
+Interface: Designed specifically for desktop screens with a full sidebar (Accounts, Finance, Lead Management, Front Office, Biometric Devices, School Website, etc.).
+Purpose: High-level school management, financial tracking, system configuration, and overall reporting.
+2. This Project Folder = Staff Mobile App 📱 (school_erp_staff_app)
+Target Users: Teachers, Subject Teachers, and Staff Members.
+Interface: Optimized for mobile phones (iOS & Android) and staff web view.
+Purpose: Quick daily operations for staff:
+📋 Taking class attendance
+📚 Marking homework & classwork
+🗓️ Viewing personal timetable
+📝 Entering exam marks
+💬 Staff chat & Notices
+🔍 Scanning student QR codes
+3. How They Connect Together 🔄
+Even though the Web Admin Dashboard (screenshot) and this Staff Mobile App look different, they are fully connected to the same central database/API:
+
+When a teacher takes attendance in this Staff Mobile App 📱 ➔ it instantly updates the "Attendance" and "Students Present" cards on the Web Admin Dashboard 🌐 (shown in your screenshot).
+When an Admin changes fees or publishes notices on the Web Admin Portal 🌐 ➔ it immediately appears on the Staff Mobile App 📱.
+Summary
+Does this exact screen belong to the Web Section? Yes. That layout is the Web Admin Dashboard for desktop browsers.
+Is this project connected to it? Yes. This Flutter app is the companion Staff Mobile Application that connects to the exact same backend API as that web dashboard.
+8:50 AM
